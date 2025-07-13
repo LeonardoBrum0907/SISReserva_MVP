@@ -1,0 +1,119 @@
+services:
+  # Aplicação PHP/Apache (Produção)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sisreserva_app_prod
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./uploads:/var/www/html/uploads
+      - ./logs:/var/www/html/logs
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - BASE_URL=${BASE_URL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+    networks:
+      - sisreserva_network
+
+  # Banco de dados MySQL/MariaDB (Produção)
+  db:
+    image: mariadb:10.11
+    container_name: sisreserva_db_prod
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mvpreserva.sql:/docker-entrypoint-initdb.d/mvpreserva.sql
+      - ./backup:/backup
+    # Não expor a porta do banco em produção por segurança
+    # ports:
+    #   - "3306:3306"
+    networks:
+      - sisreserva_network
+
+  # phpMyAdmin (apenas em modo desenvolvimento)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sisreserva_phpmyadmin_prod
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+    # Usar porta diferente ou remover em produção
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - sisreserva_network
+    profiles:
+      - admin
+
+  # Certificado SSL (Let's Encrypt) - produção
+  certbot:
+    image: certbot/certbot:latest
+    container_name: sisreserva_certbot_prod
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - app
+    networks:
+      - sisreserva_network
+
+  # Backup automatizado
+  backup:
+    image: mariadb:10.11
+    container_name: sisreserva_backup
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backup:/backup
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    depends_on:
+      - db
+    networks:
+      - sisreserva_network
+    profiles:
+      - backup
+    command: >
+      sh -c "
+        while true; do
+          sleep 86400;
+          mysqldump -h db -u ${DB_USER} -p${DB_PASS} ${DB_NAME} > /backup/sisreserva_backup_$$(date +%Y%m%d_%H%M%S).sql;
+          find /backup -name '*.sql' -mtime +7 -delete;
+        done
+      "
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  sisreserva_network:
+    driver: bridge 

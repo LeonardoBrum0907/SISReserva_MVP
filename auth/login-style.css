@@ -1,0 +1,437 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode (Default) */
+body.light-mode {
+    background-color: #f8f9fa;
+    background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #111827;
+}
+
+body.light-mode .main-title {
+    color: #111827;
+}
+
+body.light-mode .subtitle p,
+body.light-mode .additional-links .text-link,
+body.light-mode .login-link span,
+body.light-mode .sign-in {
+    color: #6b7280;
+}
+
+body.light-mode .logo-badge {
+    background-color: #10b981;
+    color: white;
+}
+
+body.light-mode .center-icon {
+    color: #374151;
+}
+
+body.light-mode .login-form input {
+    background-color: white;
+    border-color: #e5e7eb;
+    color: #111827;
+}
+
+body.light-mode .login-form input::placeholder {
+    color: #9ca3af;
+}
+
+body.light-mode .btn-email {
+    background-color: #581c87;
+    color: white;
+}
+
+body.light-mode .btn-email:hover {
+    background-color: #4c1d95;
+}
+
+body.light-mode .message-box-error {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+body.light-mode .message-box-success {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #16a34a;
+}
+
+body.light-mode .additional-links .link-separator {
+    color: #9ca3af;
+}
+
+body.light-mode .theme-toggle {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+body.light-mode .theme-toggle:hover {
+    background-color: #d1d5db;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #050505;
+    background-image: radial-gradient(circle, #2d3748 1px, transparent 1px);
+    background-size: 10px 10px;
+    color: #e2e8f0;
+}
+
+body.dark-mode .main-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .subtitle p,
+body.dark-mode .additional-links .text-link,
+body.dark-mode .login-link span,
+body.dark-mode .sign-in {
+    color: #a0aec0;
+}
+
+body.dark-mode .logo-badge {
+    background-color: #047857;
+    color: white;
+}
+
+body.dark-mode .center-icon {
+    color: #cbd5e0;
+}
+
+body.dark-mode .login-form input {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .login-form input::placeholder {
+    color: #718096;
+}
+
+body.dark-mode .btn-email {
+    background-color: #6b46c1;
+    color: white;
+}
+
+body.dark-mode .btn-email:hover {
+    background-color: #553c9a;
+}
+
+body.dark-mode .message-box-error {
+    background-color: #fed7d7;
+    border-color: #fc8181;
+    color: #c53030;
+}
+
+body.dark-mode .message-box-success {
+    background-color: #c6f6d5;
+    border-color: #68d391;
+    color: #2f855a;
+}
+
+body.dark-mode .additional-links .link-separator {
+    color: #718096;
+}
+
+body.dark-mode .theme-toggle {
+    background-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .theme-toggle:hover {
+    background-color: #2d3748;
+}
+
+/* Container principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Logo no canto superior esquerdo */
+.top-logo {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 10;
+}
+
+/* Botão de alternância de tema */
+.theme-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 10;
+}
+
+/* Conteúdo principal centralizado */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Ícone central */
+.center-icon {
+    margin-bottom: 32px;
+}
+
+.center-icon svg {
+    width: 64px;
+    height: 64px;
+}
+
+/* Título principal */
+.main-title {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+/* Subtítulo */
+.subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.subtitle p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 4px;
+}
+
+.subtitle p:last-child {
+    margin-bottom: 0;
+}
+
+/* Mensagens de erro/sucesso */
+.message-box {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Formulário */
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Wrapper para senha */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 56px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #374151;
+}
+
+/* Botão de email */
+.btn-email {
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.btn-email:active {
+    transform: translateY(0);
+}
+
+/* Links adicionais abaixo do botão Entrar */
+.additional-links {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.additional-links .text-link {
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.additional-links .text-link:hover {
+    text-decoration: underline;
+}
+
+/* Link de login (mantido para compatibilidade, se necessário) */
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+.sign-in {
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+/* Links do rodapé (ocultos) */
+.footer-links {
+    display: none;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .top-logo {
+        top: 16px;
+        left: 16px;
+    }
+    
+    .main-content {
+        padding: 20px 16px;
+    }
+    
+    .main-title {
+        font-size: 28px;
+    }
+    
+    .subtitle p {
+        font-size: 14px;
+    }
+    
+    .additional-links {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .additional-links .link-separator {
+        display: none;
+    }
+
+    .theme-toggle {
+        top: 16px;
+        right: 16px;
+    }
+}
+
+@media (max-width: 360px) {
+    .main-content {
+        padding: 16px 12px;
+    }
+    
+    .main-title {
+        font-size: 24px;
+    }
+    
+    .center-icon svg {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Animação de entrada */
+.main-content {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estados de foco melhorados para acessibilidade */
+button:focus,
+input:focus,
+a:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Redução de movimento para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+

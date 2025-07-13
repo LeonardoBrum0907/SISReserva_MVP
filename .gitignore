@@ -1,0 +1,12 @@
+/.cursor
+/.vscode
+/php_errors.log
+.env
+.env.production
+.env.development
+.env.staging
+.env.test
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

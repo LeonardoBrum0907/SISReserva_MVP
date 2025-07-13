@@ -1,0 +1,87 @@
+services:
+  # Aplicação PHP/Apache
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sisreserva_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./uploads:/var/www/html/uploads
+      - ./logs:/var/www/html/logs
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME:-sisreserva_mvp}
+      - DB_USER=${DB_USER:-sisreserva_user}
+      - DB_PASS=${DB_PASS:-sisreserva_pass}
+      - BASE_URL=${BASE_URL:-http://localhost/}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SECURE:-tls}
+    networks:
+      - sisreserva_network
+
+  # Banco de dados MySQL/MariaDB
+  db:
+    image: mariadb:10.11
+    container_name: sisreserva_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root_password}
+      MYSQL_DATABASE: ${DB_NAME:-sisreserva_mvp}
+      MYSQL_USER: ${DB_USER:-sisreserva_user}
+      MYSQL_PASSWORD: ${DB_PASS:-sisreserva_pass}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mvpreserva.sql:/docker-entrypoint-initdb.d/mvpreserva.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - sisreserva_network
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sisreserva_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USER:-sisreserva_user}
+      PMA_PASSWORD: ${DB_PASS:-sisreserva_pass}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root_password}
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - sisreserva_network
+
+  # Certificado SSL (Let's Encrypt) - opcional para produção
+  certbot:
+    image: certbot/certbot:latest
+    container_name: sisreserva_certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - app
+    profiles:
+      - ssl
+    networks:
+      - sisreserva_network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  sisreserva_network:
+    driver: bridge 

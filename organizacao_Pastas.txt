@@ -1,0 +1,69 @@
+/
+├── admin/
+│   ├── index.php
+│   ├── empreendimentos/
+│   │   ├── index.php
+│   │   ├── criar.php
+│   │   └── editar.php
+│   ├── reservas/
+│   │   ├── index.php
+│   │   └── detalhes.php
+│   ├── documentos/
+│   │   └── index.php
+│   ├── contratos/
+│   │   └── index.php
+│   ├── vendas/
+│   │   └── index.php
+│   ├── leads/
+│   │   └── index.php
+│   ├── clientes/
+│   │   ├── index.php
+│   │   └── detalhes.php
+│   └── relatorios/
+│       └── index.php
+├── imobiliaria/
+│   ├── index.php
+│   ├── corretores/
+│   │   └── index.php
+│   └── reservas/
+│       └── index.php
+├── corretor/
+│   ├── index.php
+│   ├── reservas/
+│   │   └── index.php
+│   ├── vendas/
+│   │   └── index.php
+│   └── perfil/
+│       └── index.php
+├── auth/
+│   ├── login.php
+│   ├── cadastro.php
+│   ├── recuperar-senha.php
+│   └── resetar-senha.php
+├── public/
+│   └── documentos.php
+├── api/
+│   ├── cep.php
+│   ├── reserva.php
+│   ├── upload.php
+│   └── ... (outros endpoints)
+├── includes/
+│   ├── config.php
+│   ├── database.php
+│   ├── auth.php (funções de autenticação e autorização)
+│   ├── helpers.php (funções utilitárias diversas)
+│   ├── email.php (função para envio de e-mails)
+│   └── alerts.php (função para gerenciamento de alertas in-app)
+├── css/
+│   └── style.css
+├── js/
+│   ├── main.js
+│   ├── forms.js
+│   └── admin.js
+├── uploads/
+│   ├── empreendimentos/
+│   └── documentos/
+├── index.php
+├── empreendimento.php
+├── sobre.php
+└── suporte.php

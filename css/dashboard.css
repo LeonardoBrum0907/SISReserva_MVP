@@ -1,0 +1,1904 @@
+/* ==========================================================================
+   CSS / DASHBOARD.CSS
+   UNIFICADO: Contém todos os estilos do projeto (base, público, dashboard).
+   ========================================================================== */
+
+/* --- VARIÁVEIS CSS (Moderno, Minimalista, Clean - Tons Neutros e Acentos Quentes) --- */
+:root {
+    /* Cores Neutras e Suaves para o ambiente geral */
+    --color-primary: #495057; /* Texto principal e elementos focais discretos (cinza escuro) */
+    --color-primary-light: #e9ecef; /* Linhas, bordas, divisores (cinza claro) */
+    --color-primary-dark: #343a40; /* Texto mais escuro, hover de elementos primários */
+    --color-primary-rgb: 73, 80, 87;
+
+    /* Cores de Destaque Quentes e Limpas (para botões, links de ação, KPIs) */
+    --color-accent-warm: #ff7f50; /* Coral (para ações principais) */
+    --color-accent-warm-light: #ffa07a; /* Salmão claro */
+    --color-accent-warm-dark: #e65c00; /* Laranja queimado */
+    --color-accent-warm-rgb: 255, 127, 80;
+
+    --color-secondary-cool: #607d8b; /* Azul ardósia (para elementos secundários ou informativos) */
+    --color-secondary-cool-light: #b0bec5;
+    --color-secondary-cool-dark: #455a64;
+    --color-secondary-cool-rgb: 96, 125, 139;
+
+    /* Cores de Status (com ajustes para contraste e legibilidade) */
+    --color-success: #4CAF50; /* Verde forte, mais amigável */
+    --color-warning: #FFC107; /* Amarelo (texto escuro) */
+    --color-danger: #F44336; /* Vermelho vibrante */
+    --color-info: #2196F3; /* Azul info */
+    --color-urgent: #FD7E14; /* Laranja mais forte para urgência */
+
+
+    /* Fundos - Brancos e Cinzas Muito Claros */
+    --color-background-primary: #ffffff; /* Fundo principal: Branco puro */
+    --color-background-secondary: #f8f9fa; /* Fundo de cards/seções: Cinza muito claro */
+    --color-light-bg: #f1f3f5; /* Fundo de tabelas/componentes: Cinza ainda mais claro, quase branco */
+    --color-sidebar-bg: #343a40; /* Fundo da sidebar: Cinza escuro (para contraste com o resto) */
+    --color-header-bg: #ffffff; /* Fundo do header: Branco */
+
+    /* Texto e Bordas */
+    --color-text-dark: #343a40; /* Texto principal: Cinza muito escuro */
+    --color-text-light: #f8f9fa; /* Texto para fundo escuro: Cinza muito claro */
+    --color-border: #e0e0e0; /* Borda padrão: Cinza claro e sutil */
+
+    /* Espaçamento */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+
+    /* Tipografia - Fonte moderna e clean */
+    --font-family-sans-serif: 'Inter', 'Helvetica Neue', Arial, sans-serif; /* Usando Inter como sugestão, caso esteja disponível. Senão, Helvetica Neue. */
+    --font-size-base: 1rem; /* 16px */
+    --line-height-base: 1.6;
+
+    /* Bordas Arredondadas */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+
+    /* Sombras discretas */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Importar fonte Inter do Google Fonts (adicionar no HTML <head> se usar) */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); */
+
+
+/* ==========================================================================
+   1. ESTILOS BASE E RESET (UNIFICADO DO ANTIGO style.css)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-sans-serif);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-dark);
+    background-color: var(--color-background-primary); /* Fundo principal: Branco */
+}
+
+/* Typography Base */
+h1, h2, h3, h4, h5, h6 { margin-top: 0; margin-bottom: var(--spacing-md); font-weight: 600; color: var(--color-text-dark); }
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.3rem; }
+
+p { margin-bottom: var(--spacing-md); }
+
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* Links */
+a {
+    color: var(--color-accent-warm); /* Links em tom quente */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: var(--color-accent-warm-dark);
+    text-decoration: underline;
+}
+
+/* Container de conteúdo principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.wizard-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* Helper classes */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.hidden { display: none !important; }
+
+/* Spacing Helpers (Reintroduzidos e Padronizados) */
+.mt-0 { margin-top: 0 !important; } .mb-0 { margin-bottom: 0 !important; } .ml-0 { margin-left: 0 !important; } .mr-0 { margin-right: 0 !important; }
+.pt-0 { padding-top: 0 !important; } .pb-0 { padding-bottom: 0 !important; } .pl-0 { padding-left: 0 !important; } .pr-0 { padding-right: 0 !important; }
+
+.mt-xs { margin-top: var(--spacing-xs) !important; } .mb-xs { margin-bottom: var(--spacing-xs) !important; }
+.mt-sm { margin-top: var(--spacing-sm) !important; } .mb-sm { margin-bottom: var(--spacing-sm) !important; }
+.mt-md { margin-top: var(--spacing-md) !important; } .mb-md { margin-bottom: var(--spacing-md) !important; }
+.mt-lg { margin-top: var(--spacing-lg) !important; } .mb-lg { margin-bottom: var(--spacing-lg) !important; }
+.mt-xl { margin-top: var(--spacing-xl) !important; } .mb-xl { margin-bottom: var(--spacing-xl) !important; }
+.mt-2xl { margin-top: var(--spacing-2xl) !important; } .mb-2xl { margin-bottom: var(--spacing-2xl) !important; }
+
+.pt-xs { padding-top: var(--spacing-xs) !important; } .pb-xs { padding-bottom: var(--spacing-xs) !important; }
+.pt-sm { padding-top: var(--spacing-sm) !important; } .pb-sm { padding-bottom: var(--spacing-sm) !important; }
+.pt-md { padding-top: var(--spacing-md) !important; } .pb-md { padding-bottom: var(--spacing-md) !important; }
+.pt-lg { padding-top: var(--spacing-lg) !important; } .pb-lg { padding-bottom: var(--spacing-lg) !important; }
+.pt-xl { padding-top: var(--spacing-xl) !important; } .pb-xl { padding-bottom: var(--spacing-xl) !important; }
+.pt-2xl { padding-top: var(--spacing-2xl) !important; } .pb-2xl { padding-bottom: var(--spacing-2xl) !important; }
+
+
+/* --- Header da Página Pública (index.php, empreendimento.php) --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: var(--color-background-primary);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 500;
+}
+
+.header .logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+}
+
+.header .menu-toggle { /* Menu sanduíche na página pública */
+    background: none;
+    border: none;
+    font-size: 1.2rem; /* Tamanho adequado para "Menu" */
+    cursor: pointer;
+    color: var(--color-text-dark);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease;
+}
+.header .menu-toggle:hover {
+    background-color: var(--color-background-secondary);
+}
+
+
+/* Menu lateral (off-canvas) para página pública */
+.public-off-canvas-menu {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Escondido à direita */
+    width: 250px;
+    height: 100%;
+    background-color: var(--color-background-primary);
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 999;
+    padding-top: var(--spacing-xl);
+}
+.public-off-canvas-menu.active { right: 0; } /* Abre para a direita */
+.public-off-canvas-menu ul li a {
+    display: block; padding: var(--spacing-md); color: var(--color-text-dark);
+    text-decoration: none; border-bottom: 1px solid var(--color-border);
+}
+.public-off-canvas-menu ul li a:hover { background-color: var(--color-background-secondary); }
+
+.public-menu-overlay { /* Overlay para o menu off-canvas público */
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); z-index: 998;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.public-menu-overlay.active { opacity: 1; visibility: visible; }
+
+/* Cards de empreendimento (página pública) */
+.empreendimento-card {
+    background-color: var(--color-background-secondary);
+    border-radius: var(--border-radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+}
+.empreendimento-card.mobile { /* Mobile default */
+    display: flex;
+    flex-direction: column;
+}
+.empreendimento-card.mobile .card-image-overlay {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+.empreendimento-card.mobile .card-image-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.empreendimento-card.mobile .overlay-text-content {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+    padding: var(--spacing-md); color: #fff;
+}
+.empreendimento-card.mobile .status-flag {
+    display: inline-block; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);
+    font-size: 0.8rem; font-weight: bold; margin-bottom: var(--spacing-sm); color: #fff;
+    background: var(--color-success);
+}
+.empreendimento-card.mobile h2 { font-size: 1.5rem; margin-bottom: var(--spacing-sm); color: #fff; }
+.empreendimento-card.mobile .endereco { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: var(--spacing-xs); }
+.empreendimento-card.mobile .card-bottom-content { padding: var(--spacing-md); }
+.empreendimento-card.mobile .caracteristicas { list-style: none; display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-bottom: var(--spacing-md); }
+.empreendimento-card.mobile .caracteristicas li { font-size: 0.9rem; color: var(--color-text-dark); display: flex; align-items: center; }
+.empreendimento-card.mobile .caracteristicas li i { margin-right: var(--spacing-xs); color: var(--color-primary); } /* Manter se houver algum fallback de ícone */
+.empreendimento-card.mobile .metragem, .empreendimento-card.mobile .preco { font-size: 1rem; margin-bottom: var(--spacing-sm); font-weight: bold; color: var(--color-primary); }
+
+
+/* Footer da Página Pública */
+.footer {
+    padding: var(--spacing-lg);
+    background-color: var(--color-sidebar-bg);
+    color: var(--color-text-light);
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: var(--spacing-2xl);
+}
+.footer .footer-nav ul { list-style: none; padding: 0; margin-bottom: var(--spacing-md); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-md); }
+.footer .footer-nav ul li a { color: rgba(255, 255, 255, 0.8); text-decoration: none; }
+.footer .footer-nav ul li a:hover { color: var(--color-text-light); text-decoration: underline; }
+.footer .copyright { color: rgba(255, 255, 255, 0.6); }
+
+/* --- Media Queries for public site --- */
+@media (min-width: 768px) {
+    .header { justify-content: flex-start; }
+    .header .menu-toggle { display: none; } /* Hide public menu toggle on desktop */
+    .public-off-canvas-menu, .public-menu-overlay { display: none !important; }
+    .header .desktop-nav { display: flex; margin-left: var(--spacing-2xl); }
+    .header .desktop-nav ul { list-style: none; display: flex; gap: var(--spacing-lg); }
+    .header .desktop-nav ul li a { padding: var(--spacing-sm) var(--spacing-md); color: var(--color-text-dark); font-weight: 500; }
+    .header .desktop-nav ul li a:hover { color: var(--color-primary); }
+
+    .empreendimento-card.desktop {
+        display: flex; align-items: center; max-width: 900px; margin-left: auto; margin-right: auto;
+        flex-direction: row;
+    }
+    .empreendimento-card.desktop .card-text-content { flex: 1; padding: var(--spacing-xl); }
+    .empreendimento-card.desktop .card-image-content { flex-shrink: 0; width: 350px; height: 250px; }
+    .empreendimento-card.desktop .card-image-content img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Re-apply desktop text styles for desktop cards */
+    .empreendimento-card.desktop .status-flag { color: #fff; background: var(--color-success); }
+    .empreendimento-card.desktop h2 { font-size: 1.8rem; color: var(--color-text-dark); }
+    .empreendimento-card.desktop .endereco { color: var(--color-secondary-cool-dark); }
+    .empreendimento-card.desktop .caracteristicas li { color: var(--color-text-dark); }
+    .empreendimento-card.desktop .metragem, .empreendimento-card.desktop .preco { font-size: 1rem; margin-bottom: var(--spacing-sm); font-weight: bold; color: var(--color-primary); }
+}
+
+
+/* ==========================================================================
+   2. ESTILOS DASHBOARD (Corrigido para Off-Canvas e Componentes)
+   ========================================================================== */
+
+/* --- LAYOUT PRINCIPAL DO DASHBOARD --- */
+.dashboard-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-background-secondary); /* Fundo principal da dashboard: cinza claro */
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Sidebar / Menu Lateral (Off-canvas em TODAS as resoluções) */
+.sidebar {
+    background-color: var(--color-sidebar-bg);
+    color: var(--color-text-light);
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Escondido à esquerda */
+    z-index: 1003;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md) 0;
+    transition: left 0.3s ease-in-out;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: var(--spacing-md);
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: var(--spacing-lg);
+}
+
+.sidebar-header .logo-link img {
+    display: none;
+}
+
+.sidebar-header .close-dashboard-menu {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--color-text-light);
+    display: block;
+    z-index: 1004;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease;
+}
+.sidebar-header .close-dashboard-menu:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Links da Navegação da Sidebar (Estilo de Texto e Interação) */
+.sidebar-nav ul { list-style: none; padding: 0; }
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: rgba(255,255,255,0.7);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    font-size: 1rem;
+}
+
+.sidebar-nav li a:hover,
+.sidebar-nav li a.active {
+    background-color: rgba(255,255,255,0.15);
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+.sidebar-nav li a i {
+    display: none;
+}
+
+/* Overlay para quando o menu sanduíche está aberto */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1002;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+
+/* --- Conteúdo Principal do Dashboard --- */
+.main-content-dashboard {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.dashboard-header {
+    background-color: var(--color-header-bg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* Logo e Título no Header */
+.dashboard-header-logo-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+.dashboard-header-logo-title .header-logo-link img {
+    height: 35px;
+    width: auto;
+    display: block;
+}
+.dashboard-header-logo-title h1 {
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+/* Botão sanduíche no Header */
+.dashboard-menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--color-text-dark);
+    display: block;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease;
+}
+.dashboard-menu-toggle:hover {
+    background-color: var(--color-background-secondary);
+}
+
+/* Info de Usuário e Alertas no Header */
+.dashboard-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+.user-greeting {
+    font-weight: 500;
+    color: var(--color-text-dark);
+    white-space: nowrap;
+    font-size: 0.95rem;
+}
+.alerts-icon {
+    position: relative; color: var(--color-primary); font-size: 1rem; text-decoration: none; display: flex; align-items: center; justify-content: center;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.alerts-icon:hover { color: var(--color-primary-dark); background-color: var(--color-background-secondary); }
+.alert-count {
+    position: absolute; top: -5px; right: -5px; background-color: var(--color-danger); color: var(--color-text-light);
+    font-size: 0.7rem; font-weight: bold; border-radius: 50%; padding: 1px 5px; min-width: 18px; text-align: center; line-height: 1;
+}
+
+.dashboard-body {
+    padding: var(--spacing-lg);
+    flex-grow: 1;
+    background-color: var(--color-background-secondary); /* Fundo da área de conteúdo: cinza muito claro */
+}
+
+
+/* --- RESPONSIVIDADE (MOBILE-FIRST) --- */
+/* Default styles above apply to mobile first */
+
+@media (min-width: 768px) {
+    /* Tablet and Desktop */
+    .dashboard-header-logo-title .header-logo-link img {
+        height: 20px;
+    }
+    .dashboard-header-logo-title h1 {
+        font-size: 1.6rem;
+    }
+    .user-greeting {
+        display: inline-block;
+    }
+
+    /* Ajuste para 4 KPI Cards por linha */
+.kpi-grid {
+    display: grid;
+    /* Define 4 colunas de tamanho igual, com espaçamento de 1rem (16px) */
+    grid-template-columns: repeat(4, 1fr); /* Força 4 por linha em desktop */
+    gap: 1rem; /* Espaçamento entre os cards */
+    margin-bottom: 2rem; /* Espaçamento abaixo da grade de KPIs */
+}
+
+    /* Analytics Grid (ranking e gráfico) */
+    .dashboard-analytics-grid {
+        grid-template-columns: 2fr 2fr;
+        gap: var(--spacing-xl);
+    }
+
+    /* Tabelas em Desktop */
+    .admin-table-responsive, .units-stock-table-container, .payment-flow-table-container {
+        overflow-x: hidden; /* No desktop, o overflow deve ser tratado pelas larguras */
+    }
+
+    /* Larguras de Colunas para admin/reservas/index.php */
+.admin-table .col-id { min-width: 50px; width: 5%; }
+.admin-table .col-data { min-width: 50px; width: 9%; } /* Diminuído */
+.admin-table .col-empreendimento { min-width: 150px; width: 15%; }
+.admin-table .col-unidade { min-width: 80px; width: 8%; }
+.admin-table .col-cliente { min-width: 160px; width: 16%; } /* Aumentado um pouco */
+.admin-table .col-corretor { min-width: 120px; width: 12%; }
+.admin-table .col-valor { min-width: 90px; width: 9%; text-align: right;} /* Diminuído e alinhado à direita */
+.admin-table .col-status { min-width: 50px; width: 10%; } /* Diminuído */
+.admin-table .col-expira { min-width: 80px; width: 8%; }
+.admin-table .col-ultima-interacao { min-width: 120px; width: 12%; }
+.admin-table .col-acoes { min-width: 310px; width: auto; white-space: nowrap; } /* Aumentado bastante */
+
+/* Classes para texto menor na coluna de data/hora */
+.small-font-data {
+    font-size: 0.85em; /* Fonte um pouco menor para a célula inteira */
+}
+.small-font-data .time-text {
+    font-size: 0.9em; /* A hora pode ser ainda menor */
+    color: var(--color-text-secondary);
+    display: block; /* Garante que fique em uma nova linha */
+}
+
+/* Estilos para badges de status (geral) */
+.status-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.75em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Cores dos status badges */
+.status-solicitada, .status-documentos_pendentes, .status-documentos_enviados, .status-documentos_rejeitados {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
+}
+.status-aprovada {
+    background-color: var(--color-info-light);
+    color: var(--color-info-dark);
+}
+.status-contrato_enviado, .status-aguardando_assinatura_eletronica {
+    background-color: var(--color-secondary-light);
+    color: var(--color-secondary-dark);
+}
+.status-vendida {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+.status-cancelada, .status-expirada, .status-dispensada {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger-dark);
+}
+
+/* Estilos para Modais de Feedback */
+.modal-overlay.modal-success .modal-content .modal-header {
+    background-color: var(--color-success);
+    color: var(--color-white);
+}
+
+.modal-overlay.modal-error .modal-content .modal-header {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+
+/* Icones de Documentos */
+.pdf-icon { color: #dc3545; } /* Bootstrap red */
+.image-icon { color: #007bff; } /* Bootstrap blue */
+.word-icon { color: #17a2b8; } /* Bootstrap cyan */
+.excel-icon { color: #28a745; } /* Bootstrap green */
+.default-icon { color: #6c757d; } /* Bootstrap gray */
+
+/* Ajustes para a tabela de detalhes do cliente (detalhes.php) */
+.client-table th, .client-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/* Para o botão de "Remover Comprador" no modal de edição de clientes */
+.client-form-row .remove-client-btn {
+    margin-top: var(--spacing-sm);
+    margin-left: auto; /* Alinha à direita */
+    display: block;
+    width: fit-content; /* Ajusta a largura ao conteúdo */
+}
+
+/* Para a imagem da planta no detalhes.php */
+.details-grid img {
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Estilos para a tabela de informações de pagamento em detalhes.php */
+.payment-info-table {
+    border: 1px solid var(--color-border);
+    margin-top: var(--spacing-md);
+}
+.payment-info-table th {
+    background-color: var(--color-background-tertiary);
+    color: var(--color-text-dark);
+}
+.payment-info-table td {
+    font-size: 0.9em;
+}
+
+/* Garantir que os botões de ação no footer não quebrem linha */
+.reservation-actions-footer {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha se não houver espaço suficiente */
+    gap: var(--spacing-sm); /* Espaço entre os botões */
+    justify-content: flex-start; /* Alinha à esquerda */
+    align-items: center;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+}
+.reservation-actions-footer .btn {
+    white-space: nowrap; /* Impede a quebra de linha nos botões */
+}
+
+/* Ajustes para modais grandes */
+.modal-content.large-modal-content {
+    max-width: 90%; /* Aumenta a largura máxima */
+    width: 800px; /* Largura fixa para desktop */
+}
+
+@media (max-width: 768px) {
+    .admin-table th, .admin-table td {
+        padding: var(--spacing-xs); /* Reduz ainda mais o padding em mobile */
+        font-size: 0.75em;
+    }
+
+    /* Reduzir um pouco mais as larguras das colunas em mobile */
+    .admin-table .col-id { width: 5%; }
+    .admin-table .col-data { width: 10%; }
+    .admin-table .col-empreendimento { width: 15%; }
+    .admin-table .col-unidade { width: 8%; }
+    .admin-table .col-cliente { width: 15%; }
+    .admin-table .col-corretor { width: 12%; }
+    .admin-table .col-valor { width: 8%; }
+    .admin-table .col-status { width: 8%; }
+    .admin-table .col-expira { width: 7%; }
+    .admin-table .col-ultima-interacao { width: 10%; }
+    .admin-table .col-acoes { width: 15%; } /* Menor ainda, botões ficarão um pouco mais apertados */
+
+    /* Garantir que .admin-table-actions em mobile ainda funcione com data-label */
+    .admin-table-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px; /* Espaço menor entre botões */
+        justify-content: flex-end;
+    }
+    .admin-table-actions .btn {
+        padding: 6px 8px; /* Ajusta padding do botão */
+        font-size: 0.7em;
+    }
+
+    .modal-content.large-modal-content {
+        max-width: 95%; /* Ajusta para mobile */
+        width: auto;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr; /* Uma coluna em mobile para detalhes */
+    }
+    .details-grid p {
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--color-border);
+    }
+    .details-grid p:last-child {
+        border-bottom: none;
+    }
+}
+
+
+    .admin-table, .units-stock-table, .payment-flow-table {
+        display: table; /* Volta ao comportamento de tabela */
+        width: 100%;
+        border-collapse: collapse;
+        min-width: unset; /* Remove min-width global para desktop */
+        table-layout: auto; /* Permite que as colunas se ajustem ao conteúdo, mas respeitando limites */
+    }
+
+    .admin-table thead, .units-stock-table thead, .payment-flow-table thead {
+        display: table-header-group; /* Mostra o cabeçalho */
+    }
+
+    .admin-table tbody, .units-stock-table tbody, .payment-flow-table tbody {
+        display: table-row-group;
+    }
+
+    .admin-table tr, .units-stock-table tr, .payment-flow-table tr {
+        display: table-row;
+        margin-bottom: 0;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    .admin-table tr:nth-child(even), .units-stock-table tr:nth-child(even), .payment-flow-table tr:nth-child(even) {
+        background-color: var(--color-background-secondary); /* Fundo zebrado sutil */
+    }
+
+
+    .admin-table th, .admin-table td,
+    .units-stock-table th, .units-stock-table td,
+    .payment-flow-table th, .payment-flow-table td {
+        display: table-cell; /* Volta ao comportamento de célula */
+        padding: var(--spacing-sm) calc(var(--spacing-sm) / 2); /* Pequeno espaçamento lateral */
+        text-align: left;
+        border-bottom: 1px solid var(--color-border);
+        position: static;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; /* Mantém nowrap como padrão para evitar quebra inesperada */
+        overflow: hidden;
+        text-overflow: ellipsis;        width: auto; /* Permite que a largura se adapte ao conteúdo */
+        white-space: nowrap; /* Mantém nowrap como padrão para evitar quebra inesperada */
+        overflow: hidden;
+        text-overflow: ellipsis;        width: auto; /* Permite que a largura se adapte ao conteúdo */
+        min-width: 80px; /* Largura mínima razoável */
+        max-width: 250px; /* Largura máxima para colunas de texto */
+    }
+
+    /* Ajustes específicos de largura para colunas com muito conteúdo ou campos de ação */
+    /* admin/imobiliarias/index.php table columns */
+    .admin-table th:nth-child(1), .admin-table td:nth-child(1) { width: 5%; min-width: 40px; max-width: 60px; } /* ID */
+    .admin-table th:nth-child(2), .admin-table td:nth-child(2) { width: 25%; min-width: 150px; max-width: 250px; white-space: normal; word-wrap: break-word; } /* Nome */
+    /* CNPJ, Email, Telefone, Cadastro foram removidos */
+    .admin-table th:nth-child(3), .admin-table td:nth-child(3) { width: 15%; min-width: 100px; max-width: 150px; } /* Cidade */
+    .admin-table th:nth-child(4), .admin-table td:nth-child(4) { width: 8%; min-width: 60px; max-width: 90px; } /* Estado */
+    .admin-table th:nth-child(5), .admin-table td:nth-child(5) { width: 10%; min-width: 80px; max-width: 120px; } /* Status */
+    .admin-table th:nth-child(6), .admin-table td:nth-child(6) { width: 15%; min-width: 100px; max-width: 180px; white-space: normal; word-wrap: break-word; } /* Admin Responsável */
+    .admin-table th:nth-child(7), .admin-table td:nth-child(7) { width: 12%; min-width: 100px; max-width: 150px; } /* Última Atualização */
+    .admin-table th:nth-child(8), /* Considerando que 'Ações' é a 8ª coluna */
+    .admin-table td:nth-child(8) {
+        width: auto;
+        min-width: 320px; /* Aumentado para garantir espaço para todos os botões */
+        max-width: 400px; /* Opcional: Define um limite superior flexível */
+        text-align: center;
+        white-space: normal; /* Permite que os botões se ajustem se a largura for excedida, embora com min-width alto, não deverá acontecer */
+    }
+    .admin-table th:nth-child(8), /* Considerando que 'Ações' é a 8ª coluna */
+    .admin-table td:nth-child(8) {
+        width: auto;
+        min-width: 320px; /* Aumentado para garantir espaço para todos os botões */
+        max-width: 400px; /* Opcional: Define um limite superior flexível */
+        text-align: center;
+        white-space: normal; /* Permite que os botões se ajustem se a largura for excedida, embora com min-width alto, não deverá acontecer */
+    }
+    .admin-table td::before, .units-stock-table td::before, .payment-flow-table td::before {
+        content: none; /* Esconde o pseudo-elemento no desktop */
+    }
+
+    .admin-table .admin-table-actions {
+        text-align: center;
+        min-width: 320px; /* Alinha com o min-width da célula para consistência */
+        width: auto;
+        white-space: normal; /* Permite ajuste */
+        min-width: 320px; /* Alinha com o min-width da célula para consistência */
+        width: auto;
+        white-space: normal; /* Permite ajuste */
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile specific adjustments */
+    .dashboard-header-logo-title .header-logo-link img {
+        height: 30px;
+    }
+    .dashboard-header-logo-title h1 {
+        font-size: 1.2rem;
+    }
+    .user-greeting {
+        display: none;
+    }
+    /* KPI grid will naturally stack (1fr) due to minmax in smaller screens */
+    /* Analytics grid will naturally stack (1fr) */
+
+    /* General responsive adjustments for forms/tables on mobile */
+    .admin-controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-box, .filters-box {
+        width: 100%;
+        max-width: 100%;
+        flex-direction: column;
+    }
+    .search-box input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .filters-box select, .filters-box .btn {
+        width: 100%;
+    }
+
+    /* Tabelas em mobile: empilha */
+    .admin-table, .units-stock-table, .payment-flow-table {
+        display: block; /* Força o comportamento de bloco para empilhar */
+        width: 100%;
+        border-collapse: separate; /* Permite bordas arredondadas e espaçamento */
+        border-spacing: 0 var(--spacing-sm); /* Espaço entre "linhas" empilhadas */
+        min-width: unset; /* Remove o min-width para mobile */
+        table-layout: auto; /* Volta ao auto para mobile */
+    }
+
+    .admin-table thead, .units-stock-table thead, .payment-flow-table thead {
+        position: absolute; /* Esconde o cabeçalho original da tabela, mas mantém para acessibilidade */
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .admin-table tbody, .units-stock-table tbody, .payment-flow-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-table tr, .units-stock-table tr, .payment-flow-table tr {
+        display: block;
+        margin-bottom: var(--spacing-md);
+        background-color: var(--color-background-primary);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-sm);
+        padding: var(--spacing-md);
+    }
+    .admin-table tr:nth-child(odd), .units-stock-table tr:nth-child(odd), .payment-flow-table tr:nth-child(odd) {
+        background: var(--color-background-primary); /* Fundo padrão para as "linhas" */
+    }
+    .admin-table tr:nth-child(even), .units-stock-table tr:nth-child(even), .payment-flow-table tr:nth-child(even) {
+        background: var(--color-background-primary); /* Fundo padrão para as "linhas" */
+    }
+
+    .admin-table td, .units-stock-table td, .payment-flow-table td {
+        display: block; /* Faz cada célula se comportar como um bloco */
+        text-align: right; /* Alinha o conteúdo à direita */
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-bottom: none; /* Remove bordas internas das células */
+        position: relative;
+        padding-left: 50%; /* Espaço para o pseudo-elemento */
+        white-space: normal; /* Permite que o texto quebre linha */
+        word-wrap: break-word; /* Força a quebra de palavra */
+        max-width: 100%; /* Garante que não exceda a largura do pai */
+        min-width: unset; /* Remove o min-width fixo */
+        width: auto; /* Permite auto-ajuste */
+        box-sizing: border-box; /* Garante que padding e borda sejam incluídos na largura/altura */
+    }
+
+    .admin-table td::before, .units-stock-table td::before, .payment-flow-table td::before {
+        content: attr(data-label); /* Usa o atributo data-label como "cabeçalho" */
+        position: absolute;
+        left: var(--spacing-sm);
+        width: calc(50% - (var(--spacing-sm) * 2)); /* Ajusta a largura do rótulo */
+        text-align: left;
+        font-weight: 600;
+        color: var(--color-primary-dark);
+        top: var(--spacing-xs); /* Alinha verticalmente com o conteúdo */
+    }
+
+    .admin-table .admin-table-actions {
+        text-align: center;
+        min-width: unset;
+        white-space: normal;
+        padding-left: var(--spacing-sm);
+    }
+        .admin-table-actions .btn {
+        padding: 0.25em 0.5em; /* Reduz o padding */
+        font-size: 0.75rem;   /* Reduz o tamanho da fonte */
+        margin: 2px;          /* Ajusta a margem entre botões */
+        white-space: nowrap;  /* Evita quebra de linha */
+        min-width: unset;     /* Remove largura mínima fixada */
+    }
+    .admin-table .admin-table-actions .btn:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+/* ==========================================================================
+   COMPONENTES GERAIS (Cards, Tabelas, Formulários, Modais)
+   ========================================================================== */
+
+/* --- BOTÕES (Completo e Padronizado) --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    gap: var(--spacing-xs);
+}
+
+.btn:hover {
+    filter: brightness(0.9);
+}
+
+/* Variações de cor do botão (Tons Quentes e Clean) */
+.btn-primary { background-color: var(--color-accent-warm); border-color: var(--color-accent-warm); color: var(--color-text-light); }
+.btn-primary:hover { background-color: var(--color-accent-warm-dark); border-color: var(--color-accent-warm-dark); }
+
+.btn-success { background-color: var(--color-success); border-color: var(--color-success); color: var(--color-text-light); }
+.btn-success:hover { background-color: var(--color-success); border-color: var(--color-success); filter: brightness(0.9); }
+
+.btn-danger { background-color: var(--color-danger); border-color: var(--color-danger); color: var(--color-text-light); }
+.btn-danger:hover { background-color: var(--color-danger); border-color: var(--color-danger); filter: brightness(0.9); }
+
+.btn-warning { background-color: var(--color-warning); border-color: var(--color-warning); color: var(--color-text-dark); }
+.btn-warning:hover { background-color: var(--color-warning); border-color: var(--color-warning); filter: brightness(0.9); }
+
+.btn-info { background-color: var(--color-info); border-color: var(--color-info); color: var(--color-text-light); }
+.btn-info:hover { background-color: var(--color-info); border-color: var(--color-info); filter: brightness(0.9); }
+
+.btn-secondary { background-color: var(--color-secondary-cool); border-color: var(--color-secondary-cool); color: var(--color-text-light); }
+.btn-secondary:hover { background-color: var(--color-secondary-cool-dark); border-color: var(--color-secondary-cool-dark); }
+
+/* Botões com apenas contorno */
+.btn-outline-primary { background-color: transparent; color: var(--color-accent-warm); border-color: var(--color-accent-warm); }
+.btn-outline-primary:hover { background-color: var(--color-accent-warm); color: var(--color-text-light); }
+
+/* Tamanhos de botão */
+.btn-sm { padding: 0.3em 0.8em; font-size: 0.85rem; border-radius: var(--border-radius-sm); }
+
+/* Estilos de Botão (Seção de Ações) */
+.admin-table-actions .btn {
+    padding: 0.25em 0.5em; /* Reduz o padding */
+    font-size: 0.75rem;   /* Reduz o tamanho da fonte */
+    margin: 2px;          /* Ajusta a margem entre botões */
+    white-space: nowrap;  /* Evita quebra de linha */
+    min-width: unset;     /* Remove largura mínima fixada */
+}
+
+
+
+
+/* --- Cards de Conteúdo (KPIs, Seções, Analytics) --- */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+.kpi-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
+    background-color: #ffffff;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-decoration: none; /* Remove sublinhado dos links */
+    color: inherit; /* Mantém a cor do texto padrão */
+    transition: transform 0.2s ease-in-out;
+}
+.kpi-label { font-size: 0.85rem; color: var(--color-text-dark); margin-bottom: var(--spacing-xs); opacity: 0.8; }
+.kpi-value { font-size: 1.8rem; font-weight: 700; color: var(--color-accent-warm-dark); }
+
+.kpi-card-urgent { background-color: var(--color-urgent); color: var(--color-text-light); }
+.kpi-card-urgent .kpi-value, .kpi-card-urgent .kpi-label, .kpi-card-urgent .kpi-action-link { color: var(--color-text-light); }
+
+
+/* --- Alertas Recentes (Dashboard Home) --- */
+.latest-alerts-section { margin-bottom: var(--spacing-xl); }
+.latest-alerts-section h3 { margin-bottom: var(--spacing-md); }
+.latest-alerts-section .alerts-container {
+    display: flex; flex-direction: column; gap: var(--spacing-sm);
+    max-height: 200px; overflow-y: auto; padding-right: var(--spacing-sm);
+    background-color: var(--color-background-primary); border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm); padding: var(--spacing-md); border: 1px solid var(--color-border);
+}
+/* Scrollbar styling */
+.latest-alerts-section .alerts-container::-webkit-scrollbar { width: 6px; background-color: var(--color-light-bg); }
+.latest-alerts-section .alerts-container::-webkit-scrollbar-thumb { background-color: var(--color-accent-warm-light); border-radius: 3px; }
+.latest-alerts-section .alerts-container::-webkit-scrollbar-thumb:hover { background-color: var(--color-accent-warm-dark); }
+
+.latest-alerts-section .alert-item {
+    background-color: var(--color-background-primary); border-left: 4px solid var(--color-info);
+    padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: flex-start;
+    gap: var(--spacing-xs); transition: all 0.2s ease-in-out; border: 1px solid var(--color-border); position: relative;
+}
+.latest-alerts-section .alert-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.latest-alerts-section .alert-item.alert-unread { border-color: var(--color-danger); background-color: rgba(255, 193, 7, 0.1); }
+.latest-alerts-section .alert-item.alert-read { border-color: var(--color-border); opacity: 0.8; }
+
+.latest-alerts-section .alert-content-wrapper { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; width: 100%; }
+.latest-alerts-section .alert-title {
+    font-size: 0.9rem; font-weight: 600; margin-bottom: 0; color: var(--color-text-dark);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.latest-alerts-section .alert-item.alert-unread .alert-title { color: var(--color-accent-warm-dark); }
+.latest-alerts-section .alert-message {
+    font-size: 0.8rem; color: var(--color-text-dark); margin-bottom: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.latest-alerts-section .alert-meta-actions {
+    display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-xs);
+    flex-shrink: 0; width: 100%; margin-top: var(--spacing-xs);
+}
+.latest-alerts-section .alert-date { font-size: 0.75rem; color: var(--color-secondary-cool-dark); white-space: nowrap; }
+.latest-alerts-section .alert-buttons { display: flex; gap: var(--spacing-xs); justify-content: flex-end; flex-wrap: wrap; }
+
+/* Desktop adjustments for latest alerts */
+@media (min-width: 768px) {
+    .latest-alerts-section .alert-item { flex-direction: row; justify-content: space-between; align-items: center; }
+    .latest-alerts-section .alert-content-wrapper { flex-direction: row; align-items: center; gap: var(--spacing-sm); }
+    .latest-alerts-section .alert-message { flex-shrink: 0; max-width: 60%; }
+    .latest-alerts-section .alert-meta-actions { flex-direction: row; align-items: center; gap: var(--spacing-md); margin-top: 0; width: auto; }
+}
+
+
+/* --- Analytics Grid (Ranking e Gráficos) --- */
+.dashboard-analytics-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+.analytics-card {
+    background-color: var(--color-background-primary); padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);
+}
+.analytics-card h3 {
+    font-size: 1.25rem; color: var(--color-accent-warm-dark); margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-xs);
+}
+.ranking-list { list-style: none; padding: 0; }
+.ranking-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--spacing-sm) 0; border-bottom: 1px dashed var(--color-border);
+}
+.ranking-list li:last-child { border-bottom: none; }
+.ranking-position { font-weight: 600; color: var(--color-accent-warm); margin-right: var(--spacing-sm); }
+.ranking-name { flex-grow: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--color-text-dark); }
+.ranking-value { font-weight: 600; color: var(--color-secondary-cool-dark); white-space: nowrap; }
+.chart-card { min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.chart-card canvas { flex-grow: 1; max-height: 450px; }
+
+
+/* --- FORMULÁRIOS --- */
+.admin-form .form-section {
+    background-color: var(--color-background-primary); padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-2xl); border: 1px solid var(--color-border);
+}
+.form-section {
+    background-color: var(--color-background-primary); padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-2xl); border: 1px solid var(--color-border);
+}
+.admin-form .form-section h3 {
+    font-size: 1.5rem; color: var(--color-accent-warm-dark); margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm); text-align: left;
+}
+.form-group { margin-bottom: var(--spacing-md); }
+.form-group label { display: block; margin-bottom: var(--spacing-xs); font-weight: 500; color: var(--color-text-dark); }
+.form-control {
+    display: block; width: 100%; padding: 0.5rem 0.75rem; font-size: var(--font-size-base);
+    line-height: 1.5; color: var(--color-text-dark); background-color: var(--color-background-primary);
+    border: 1px solid var(--color-border); border-radius: var(--border-radius-md); transition: all 0.2s ease-in-out;
+}
+.form-control:focus {
+    border-color: var(--color-accent-warm); box-shadow: 0 0 0 0.2rem rgba(var(--color-accent-warm-rgb), 0.25); outline: none;
+}
+textarea.form-control { min-height: 100px; resize: vertical; }
+input[type="file"] {
+    padding: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: var(--border-radius-md);
+    background-color: var(--color-background-primary); font-size: 0.9rem; height: auto;
+}
+input[readonly], select[readonly], textarea[readonly] { background-color: var(--color-light-bg); cursor: default; opacity: 0.9; }
+
+/* Estilo para o input de busca geral */
+.admin-controls-bar .search-box input {
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box; /* Garante que padding não aumente a largura */
+}
+.admin-controls-bar .search-box input:focus {
+    border-color: var(--color-accent-warm);
+    box-shadow: 0 0 0 3px rgba(var(--color-accent-warm-rgb), 0.25);
+    outline: none;
+}
+.admin-controls-bar .search-box {
+    position: relative;
+    flex-grow: 1; /* Permite que ocupe o espaço disponível */
+    max-width: 300px; /* Limita a largura no desktop */
+}
+.admin-controls-bar .search-box i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-secondary-cool-dark);
+    pointer-events: none; /* Não interfere com o clique no input */
+}
+
+
+/* Inline form groups (for 2-3 columns) */
+.form-group-inline { display: flex; flex-direction: column; gap: var(--spacing-md); }
+@media (min-width: 600px) {
+    .form-group-inline { flex-direction: row; }
+    .form-group-inline .form-group { flex: 1; }
+}
+.admin-form .form-actions { display: flex; justify-content: flex-end; gap: var(--spacing-md); margin-top: var(--spacing-xl); }
+
+/* Wizard Navigation */
+.wizard-navigation {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl); background-color: var(--color-background-primary);
+    padding: var(--spacing-md); border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);
+}
+.wizard-step {
+    padding: var(--spacing-sm) var(--spacing-lg); border-radius: var(--border-radius-md);
+    background-color: var(--color-background-secondary); color: var(--color-text-dark);
+    font-weight: 500; font-size: 0.9rem; cursor: default; transition: all 0.2s ease-in-out;
+}
+.wizard-step.active {
+    background-color: var(--color-accent-warm); color: var(--color-text-light); box-shadow: var(--shadow-md);
+}
+/* Estilos para o wizard - Etapa 3 e 4 */
+#unidades_por_andar_container, #tipos_unidades_container, .batch-tools-panel {
+    background-color: var(--color-background-secondary); padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md); margin-top: var(--spacing-md); border: 1px solid var(--color-border);
+}
+.tipo-unidade-item {
+    background-color: var(--color-background-primary); padding: var(--spacing-md);
+    border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-md); border: 1px solid var(--color-border);
+}
+.remove-tipo-unidade { position: relative; margin-top: var(--spacing-md); align-self: flex-end; }
+
+/* Tabelas dentro de formulários (ex: unidades em estoque, fluxo de pagamento) */
+.units-stock-table-container, .payment-flow-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: var(--spacing-lg);
+    background-color: var(--color-background-primary);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+/* Estilo Desktop para tabelas de formulário */
+.units-stock-table, .payment-flow-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.units-stock-table th, .payment-flow-table th, .units-stock-table td, .payment-flow-table td {
+    padding: var(--spacing-md) calc(var(--spacing-md) / 2); /* Espaçamento lateral */
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 80px; /* Largura mínima para desktop */
+    max-width: 250px; /* Largura máxima para colunas de texto */
+    width: auto; /* Permite auto-ajuste de largura */
+}
+/* Ajuste para a coluna de ações para garantir que os botões caibam */
+.units-stock-table td.admin-table-actions, .payment-flow-table td.admin-table-actions {
+    min-width: 160px;
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
+}
+.units-stock-table th, .payment-flow-table th {
+    background-color: var(--color-light-bg);
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.units-stock-table tbody tr:hover, .payment-flow-table tbody tr:hover { background-color: var(--color-light-bg); }
+.units-stock-table input, .units-stock-table select, .payment-flow-table input, .payment-flow-table select {
+    width: 100%; padding: var(--spacing-xs); border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); font-size: 0.9rem;
+}
+.payment-flow-summary {
+    background-color: var(--color-background-secondary); padding: var(--spacing-md); margin-top: var(--spacing-lg);
+    border-radius: var(--border-radius-md); text-align: right; font-weight: 600; color: var(--color-text-dark);
+    border: 1px solid var(--color-border);
+}
+.payment-flow-summary p { margin: var(--spacing-xs) 0; }
+.text-danger { color: var(--color-danger); }
+.text-warning { color: var(--color-warning); }
+.text-success { color: var(--color-success); }
+
+
+/* --- TABLEAS DE DADOS GERAIS (admin-table) --- */
+.admin-table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: var(--spacing-lg);
+    background-color: var(--color-background-primary);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    width: 100%;
+}
+/* Estilo Desktop para admin-table */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.admin-table th, .admin-table td {
+    padding: var(--spacing-md) calc(var(--spacing-md) / 2); /* Espaçamento lateral */
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: middle;
+    font-size: 0.9rem;
+    color: var(--color-text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 80px; /* Largura mínima para desktop */
+    max-width: 250px; /* Largura máxima para colunas de texto */
+    width: auto; /* Permite auto-ajuste de largura */
+}
+
+/* Ajuste específico para a coluna de 'wrap-text' para permitir quebra de linha */
+.admin-table .wrap-text {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 300px;
+    min-width: 120px;
+    width: auto;
+}
+
+.admin-table th {
+    background-color: var(--color-light-bg);
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.admin-table th i.fas {
+    display: inline-block; /* Ícones de ordenação agora visíveis */
+    margin-left: 5px;
+    font-size: 0.8em;
+    color: var(--color-secondary-cool-light);
+}
+.admin-table th:hover i.fas {
+    color: var(--color-primary-dark);
+}
+
+.admin-table tbody tr:hover { background-color: var(--color-light-bg); }
+.admin-table .admin-table-actions {
+    text-align: center;
+    white-space: nowrap;
+    min-width: 160px;
+    width: 1%;
+}
+.admin-table .admin-table-actions .btn { margin: var(--spacing-xs); display: inline-block; }
+
+
+/* --- MODAIS (PADRÃO UNIFICADO) --- */
+.modal-overlay {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    justify-content: center; 
+    align-items: center;
+    z-index: 1000; 
+    opacity: 0; 
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.modal-overlay.active { display: flex; opacity: 1; visibility: visible; }
+.modal-content {
+    background-color: var(--color-background-primary); 
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg); 
+    box-shadow: var(--shadow-lg);
+    width: 90%; max-width: 550px; 
+    position: relative;
+    transform: translateY(-30px); 
+    transition: transform 0.3s ease-out; 
+    color: var(--color-text-dark);
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+.modal-header h3 { margin: 0; font-size: 1.5rem; color: var(--color-accent-warm); }
+.modal-close-btn {
+    background: none; border: none; font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--color-text-dark); transition: color 0.2s ease;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+}
+.modal-close-btn:hover { color: var(--color-danger); background-color: var(--color-background-secondary); }
+.modal-body { padding: var(--spacing-md) 0; font-size: 1rem; line-height: 1.6; }
+.modal-body strong { color: var(--color-accent-warm-dark); }
+.modal-footer {
+    display: flex; justify-content: flex-end; gap: var(--spacing-md);
+    margin-top: var(--spacing-xl); padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+}
+
+/* NOVO: Estilo para modal maior */
+.modal-content.large-modal-content {
+    max-width: 800px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+    box-sizing: border-box;
+}
+
+/* Para dispositivos móveis, ajuste a largura para ser mais responsiva */
+@media (max-width: 767.98px) {
+    .modal-content.large-modal-content {
+        width: 98%;
+        max-height: 95vh;
+        margin: 10px auto;
+    }
+}
+
+/* Estilos para grupos de campos de cliente dentro do modal de edição */
+.client-form-group {
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border);
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+.client-form-group h4 {
+    font-size: 1.1rem;
+    color: var(--color-accent-warm-dark);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: var(--spacing-xs);
+}
+.client-form-group .remove-client-btn {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+}
+
+/* Para a área de informações de pagamento */
+.payment-info-display {
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+}
+
+/* Status Badges para a página de detalhes (Cores de Status) */
+/* Estilos para badges de status (geral) */
+.status-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.75em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Cores específicas para cada status */
+.status-badge.status-solicitada { background-color: #ff9800; } /* Laranja padrão para solicitada */
+.status-badge.status-aprovada { background-color: var(--color-success); } /* Verde para aprovada */
+.status-badge.status-documentos_pendentes { background-color: var(--color-warning); color: var(--color-text-dark); } /* Amarelo com texto escuro */
+.status-badge.status-documentos_enviados { background-color: var(--color-info); } /* Azul info */
+.status-badge.status-documentos_aprovados { background-color: var(--color-success); } /* Verde */
+.status-badge.status-documentos_rejeitados { background-color: var(--color-danger); } /* Vermelho */
+.status-badge.status-contrato_enviado { background-color: #673AB7; } /* Roxo escuro para contrato */
+.status-badge.status-vendida { background-color: #009688; } /* Verde Água para vendida */
+.status-badge.status-cancelada { background-color: #9E9E9E; } /* Cinza médio */
+.status-badge.status-expirada { background-color: #616161; } /* Cinza escuro */
+.status-badge.status-dispensada { background-color: var(--color-background-primary); color: var(--color-text-dark); border: 1px solid var(--color-border); }
+.status-badge.status-rejeitado { background-color: var(--color-danger); }
+.status-badge.status-pendente, .status-badge.status-warning { background-color: var(--color-warning); color: var(--color-text-dark); }
+.status-badge.status-aprovado, .status-badge.status-success { background-color: var(--color-success); }
+.status-badge.status-rejeitado, .status-badge.status-danger { background-color: var(--color-danger); }
+.status-badge.status-info { background-color: var(--color-info); }
+/* Cor de fundo para cada status */
+.status-badge.status-ativo {
+    background-color: #28a745; /* Verde para ativo */
+}
+
+.status-badge.status-pausado {
+    background-color: #ffc107; /* Amarelo para pausado */
+    color: #333; /* Texto escuro para melhor contraste no amarelo */
+}
+
+/* Você pode adicionar outros status se precisar */
+.status-badge.status-indisponivel {
+    background-color: #dc3545; /* Vermelho */
+}
+/* Cor de fundo para cada status */
+.status-badge.status-ativo {
+    background-color: #28a745; /* Verde para ativo */
+}
+
+.status-badge.status-pausado {
+    background-color: #ffc107; /* Amarelo para pausado */
+    color: #333; /* Texto escuro para melhor contraste no amarelo */
+}
+
+/* Você pode adicionar outros status se precisar */
+.status-badge.status-indisponivel {
+    background-color: #dc3545; /* Vermelho */
+}
+/* Grid para detalhes */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+}
+.details-grid p {
+    margin-bottom: var(--spacing-xs);
+}
+.details-grid p strong {
+    color: var(--color-accent-warm-dark);
+}
+.details-grid .full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* Estilos para o print (para o botão de imprimir) */
+@media print {
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+    .dashboard-wrapper, .sidebar, .dashboard-header, .form-actions, .message-box {
+        display: none !important;
+    }
+    .main-content-dashboard, .admin-content-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+    .details-section, .admin-table-responsive, .payment-info-display {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+    h2, h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #000 !important;
+        border-bottom: 1px solid #ccc !important;
+        padding-bottom: 0.3rem !important;
+    }
+    .admin-table th, .admin-table td {
+        border: 1px solid #eee !important;
+        padding: 8px !important;
+        color: #000 !important;
+        background-color: #f9f9f9 !important;
+    }
+    .status-badge {
+        border: 1px solid #ccc;
+        background-color: #eee;
+        color: #000;
+    }
+    a {
+        text-decoration: none !important;
+        color: #000 !important;
+    }
+}
+
+/* --- Estilos para a Página de Relatórios --- */
+.report-section {
+    background-color: var(--color-background-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-2xl);
+    border: 1px solid var(--color-border);
+}
+
+.report-section h3 {
+    font-size: 1.5rem;
+    color: var(--color-accent-warm-dark);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+}
+
+.filters-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: flex-end;
+}
+
+.filters-bar .form-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+.report-summary {
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-top: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+}
+
+.report-summary p {
+    margin-bottom: var(--spacing-xs);
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-top: var(--spacing-xl);
+    background-color: #fff;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+
+/* Títulos menores dentro das seções de relatório */
+.report-section h4 {
+    font-size: 1.25rem;
+    color: var(--color-secondary-cool-dark);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Ajustes para mobile para filtros */
+@media (max-width: 767.98px) {
+    .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filters-bar .form-group {
+        width: 100%;
+        min-width: unset;
+    }
+    .filters-bar .form-actions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    .filters-bar .form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Seção de dados do cliente */
+.details-section {
+    background-color: var(--color-background-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-2xl);
+    border: 1px solid var(--color-border);
+}
+
+.details-section h3 {
+    font-size: 1.5rem;
+    color: var(--color-accent-warm-dark);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Grid para exibir dados em modo de visualização */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+}
+.details-grid p {
+    margin-bottom: var(--spacing-xs);
+}
+.details-grid p strong {
+    color: var(--color-accent-warm-dark);
+}
+.details-grid .full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* Seções de histórico (reservas, vendas) */
+.history-section {
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-2xl);
+    border: 1px solid var(--color-border);
+}
+
+.history-section h3 {
+    font-size: 1.3rem;
+    color: var(--color-secondary-cool-dark);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* ==========================================================================
+   ADICIONAIS: ESTILOS ESSENCIAIS PARA MODAIS (Bootstrap Compatibility)
+   ========================================================================== */
+
+/* A classe 'modal' é o contêiner principal do modal (escondido por padrão) */
+/* Ela será ativada e controlada pelo JavaScript do Bootstrap */
+.modal {
+    display: none; /* ESCONDE o modal por padrão */
+    position: fixed; /* Posiciona o modal sobre todo o conteúdo */
+    top: 0;
+    left: 0;
+    z-index: 1050; /* Garante que o modal esteja acima de outros elementos */
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Esconde overflow horizontal */
+    overflow-y: auto;   /* Habilita rolagem vertical se o conteúdo for muito grande */
+    outline: 0; /* Remove outline em foco */
+    
+    /* Fundo escuro semi-transparente do modal. O modal-backdrop gerencia isso, mas esta é uma segurança */
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo padrão se o backdrop não for usado ou estiver transparente */
+    
+    /* Efeito de transição */
+    transition: opacity 0.15s linear;
+    opacity: 0; /* Inicia transparente para transição de fade */
+}
+
+/* Estilo para o modal quando ele está ativo ou sendo mostrado */
+/* Bootstrap adiciona a classe 'show' para tornar o modal visível */
+.modal.show {
+    display: block; /* Força a exibição quando o modal está ativo */
+    opacity: 1; /* Torna visível */
+}
+
+/* Efeito de transição de fade para o conteúdo do modal (o modal-dialog) */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px); /* Começa ligeiramente acima para descer */
+}
+.modal.show .modal-dialog {
+    transform: translate(0, 0); /* Volta à posição original */
+}
+
+/* Classe aplicada ao <body> quando um modal está aberto para prevenir scroll na página principal */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* O backdrop (fundo escuro semi-transparente atrás do modal) */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040; /* Abaixo do modal, acima do resto do conteúdo */
+    width: 100vw; /* Largura total da viewport */
+    height: 100vh; /* Altura total da viewport */
+    background-color: #000; /* Cor preta para o fundo */
+    opacity: 0.5; /* Opacidade padrão */
+    transition: opacity 0.15s linear;
+}
+/* Efeito de fade para o backdrop */
+.modal-backdrop.fade { opacity: 0; }
+.modal-backdrop.fade.show { opacity: 0.5; }
+
+
+/* O contêiner do diálogo do modal (onde o modal-content fica) */
+.modal-dialog {
+    position: relative; /* Para posicionar o conteúdo dentro dele */
+    width: auto;
+    margin: 1.75rem auto; /* Margens padrão do Bootstrap para centralizar vertical e horizontalmente */
+    pointer-events: none; /* Permite cliques passarem para o conteúdo interno até que o modal-content seja alcançado */
+    max-width: 500px; /* Largura máxima padrão para modais (Bootstrap 'modal-md') */
+}
+
+/* O conteúdo do modal (o "cartão" branco que contém header, body e footer do modal) */
+/* Este é o 'modal-content' que você já tinha, mas com ajustes para compatibilidade Bootstrap */
+/* Certifique-se de que este bloco não duplique ou sobrescreva seu .modal-content original,
+   se ele já contiver essas propriedades. O ideal é que estas se unam às suas. */
+.modal-content {
+    position: relative; /* Mantém o position relative, já que você o tinha */
+    display: flex; /* Adiciona display flex para layout interno */
+    flex-direction: column; /* Conteúdo em coluna */
+    width: 100%; /* Largura total dentro do modal-dialog */
+    pointer-events: auto; /* Permite cliques dentro do conteúdo */
+    background-color: var(--color-background-primary);
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Borda padrão do Bootstrap */
+    border-radius: var(--border-radius-lg);
+    outline: 0;
+    box-shadow: var(--shadow-lg); /* Sua sombra */
+    padding: 0; /* Bootstrap modal-content geralmente não tem padding aqui, ele vai em header/body/footer */
+}
+
+/* Cabeçalho do Modal */
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
+}
+.modal-header .modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.3rem;
+    color: var(--color-primary-dark);
+}
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem auto; /* Posiciona o 'x' corretamente */
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none; /* Remove estilo padrão de botão em alguns browsers */
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000; /* Cor do 'x' */
+    text-shadow: 0 1px 0 #fff; /* Sombra do 'x' */
+    opacity: 0.5; /* Opacidade padrão */
+    transition: opacity 0.2s ease-in-out;
+}
+.modal-header .close:hover {
+    opacity: 0.75;
+}
+
+/* Corpo do Modal */
+.modal-body {
+    position: relative;
+    flex: 1 1 auto; /* Permite que o body cresça */
+    padding: var(--spacing-md) var(--spacing-xl);
+}
+
+/* Rodapé do Modal */
+.modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    border-bottom-left-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+}
+.modal-footer > * { /* Garante espaçamento entre botões no footer */
+    margin: var(--spacing-xs);
+}
+
+/* Opcional: Classes de tamanho de modal do Bootstrap, se você as usa no HTML */
+.modal-sm .modal-dialog { max-width: 300px; }
+.modal-lg .modal-dialog { max-width: 800px; }
+.modal-xl .modal-dialog { max-width: 1140px; }
+
+/* Para modais com conteúdo rolável */
+.modal-dialog-scrollable {
+    height: calc(100% - 3.5rem);
+    overflow: hidden;
+}
+.modal-dialog-scrollable .modal-content {
+    max-height: 100%;
+    overflow: hidden;
+}
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+}
+
+/* NOVO: Estilo para modal maior (mantido do seu código anterior) */
+/* Se a largura e overflow já são tratados pelo Bootstrap, pode ser ajustado */
+.modal-content.large-modal-content {
+    max-width: 800px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+    box-sizing: border-box;
+}
+
+/* Para dispositivos móveis, ajuste a largura para ser mais responsiva */
+@media (max-width: 767.98px) {
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: unset; /* Remove max-width para telas pequenas */
+        width: calc(100% - 1rem); /* 100% da largura menos margens */
+    }
+    .modal-content.large-modal-content {
+        width: 98%;
+        max-height: 95vh;
+        margin: 10px auto;
+    }
+}
+
+/* css/style.css */
+
+/* Layout para páginas de edição */
+.edit-page-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+    gap: 2rem; /* Espaçamento entre as colunas */
+}
+
+.main-form-column {
+    flex: 3; /* O formulário ocupa 3 partes do espaço */
+    min-width: 300px; /* Largura mínima */
+}
+
+.actions-column {
+    flex: 1; /* A coluna de ações ocupa 1 parte do espaço */
+    min-width: 250px;
+}
+
+.actions-box {
+    background-color: var(--color-background-secondary);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+}
+
+.actions-box h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 1rem;
+}
+
+.action-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Espaço entre os botões */
+}
+
+.action-buttons-group .btn {
+    width: 100%; /* Faz os botões ocuparem toda a largura da coluna */
+    text-align: center;
+}

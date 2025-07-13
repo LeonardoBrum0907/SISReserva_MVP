@@ -1,0 +1,53 @@
+# Arquivos de controle de versão
+.git
+.gitignore
+.gitattributes
+
+# Arquivos do Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Arquivos de ambiente
+.env
+.env.*
+
+# Arquivos de log
+*.log
+logs/
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Arquivos de cache
+.cache/
+*.cache
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Arquivos de documentação
+README.md
+DEPLOY_HOSTINGER_VPS.md
+*.md
+
+# Arquivos de dependências locais
+node_modules/
+vendor/
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old
+
+# Arquivos de certificado SSL local
+certbot/ 
