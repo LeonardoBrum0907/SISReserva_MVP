@@ -86,6 +86,7 @@ try {
                 WHEN me.tipo = 'video' THEN 3
                 WHEN me.tipo = 'documento_contrato' THEN 4
                 WHEN me.tipo = 'documento_memorial' THEN 5
+                WHEN me.tipo = 'foto_planta' THEN 6
                 ELSE 8
             END, me.data_upload ASC;
     ";
@@ -95,6 +96,7 @@ try {
    $galeria_fotos = [];
    $videos_youtube_ids = [];
    $documentos_link = [];
+   $foto_planta = null;
 
    foreach ($midias_raw as $midia) {
       if ($midia['tipo'] === 'foto_principal') {
@@ -107,8 +109,11 @@ try {
          $documentos_link['contrato'] = $midia['caminho_arquivo'];
       } elseif ($midia['tipo'] === 'documento_memorial') {
          $documentos_link['memorial_descritivo'] = $midia['caminho_arquivo'];
+      } elseif ($midia['tipo'] === 'foto_planta') {
+         $foto_planta = $midia['caminho_arquivo'];
       }
    }
+
 
    // CORRIGIDO: URL de embed do Google Maps para o formato padrão do Google Maps Embed API
    $endereco_completo_map = urlencode($empreendimento['endereco'] . ', ' . $empreendimento['numero'] . ' - ' . $empreendimento['bairro'] . ', ' . $empreendimento['cidade'] . ' - ' . $empreendimento['estado'] . ', ' . $empreendimento['cep']);
@@ -245,12 +250,18 @@ try {
    die("<h1>Erro</h1><p>Não foi possível carregar os detalhes do empreendimento. Por favor, tente novamente mais tarde.</p>");
 }
 
+
+
 $page_title = htmlspecialchars($empreendimento['nome']);
 
 require_once 'includes/header_public.php';
 
 ?>
+
+
 <script>
+   // Debug: Verificar valor de $foto_planta
+   console.log('Valor de $foto_planta:', <?php echo json_encode($foto_planta); ?>);
    <?php
    // Tenta codificar empreendimento_public_data para JSON
    $encoded_empreendimento_public_data = json_encode($empreendimento_public_data);
@@ -333,30 +344,28 @@ require_once 'includes/header_public.php';
 
 <section class="carousel-section">
    <div class="carousel-container">
-      <button class="carousel-nav prev" aria-label="Imagem anterior">
-         < </button>
-            <div class="carousel" tabindex="0" aria-roledescription="carousel">
-               <?php if (!empty($galeria_fotos)): ?>
-                  <?php foreach ($galeria_fotos as $foto_path): ?>
-                     <img src="<?php echo BASE_URL . htmlspecialchars($foto_path); ?>" alt="Foto da galeria" class="gallery-item" data-full-src="<?php echo BASE_URL . htmlspecialchars($foto_path); ?>">
-                  <?php endforeach; ?>
-               <?php else: ?>
-                  <p>Nenhuma foto de galeria disponível.</p>
-               <?php endif; ?>
-            </div>
-            <button class="carousel-nav next" aria-label="Próxima imagem">></button>
+      <button class="carousel-nav prev" aria-label="Imagem anterior"><span class="material-icons">navigate_before</span></button>
+      <div class="carousel" tabindex="0" aria-roledescription="carousel">
+         <?php if (!empty($galeria_fotos)): ?>
+            <?php foreach ($galeria_fotos as $foto_path): ?>
+               <img src="<?php echo BASE_URL . htmlspecialchars($foto_path); ?>" alt="Foto da galeria" class="gallery-item" data-full-src="<?php echo BASE_URL . htmlspecialchars($foto_path); ?>">
+            <?php endforeach; ?>
+         <?php else: ?>
+            <p>Nenhuma foto de galeria disponível.</p>
+         <?php endif; ?>
+      </div>
+      <button class="carousel-nav next" aria-label="Próxima imagem"><span class="material-icons">navigate_next</span></button>
    </div>
 </section>
 
 <div class="modal-galeria hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
-   <button class="modal-close-galeria" aria-label="Fechar modal">×</button>
-   <button class="modal-nav-galeria modal-prev" aria-label="Imagem anterior no modal">
-      << /button>
-         <div class="modal-content-galeria">
-            <img src="" alt="" />
-            <p class="modal-caption-galeria"></p>
-         </div>
-         <button class="modal-nav-galeria modal-next" aria-label="Próxima imagem no modal">></button>
+   <button class="modal-close-galeria close-btn" aria-label="Fechar modal"><span class="material-icons">close</span></button>
+   <button class="modal-nav-galeria modal-prev" aria-label="Imagem anterior no modal"><span class="material-icons">navigate_before</span></button>
+   <div class="modal-content-galeria">
+      <img src="" alt="" />
+      <p class="modal-caption-galeria"></p>
+   </div>
+   <button class="modal-nav-galeria modal-next" aria-label="Próxima imagem no modal"><span class="material-icons">navigate_next</span></button>
 </div>
 
 <section class="secao-midias">
@@ -393,8 +402,8 @@ require_once 'includes/header_public.php';
 </section>
 
 <div class="modal-midia hidden" id="mediaModal" role="dialog" aria-modal="true" aria-labelledby="mediaModalTitle" tabindex="-1">
+   <button class="modal-midia-close close-btn" aria-label="Fechar modal"><span class="material-icons">close</span></button>
    <div class="modal-midia-content">
-      <button class="modal-midia-close" aria-label="Fechar modal">×</button>
       <h2 class="modal-midia-title" id="mediaModalTitle">Título do Modal</h2>
       <div class="modal-midia-body">
          <p>Conteúdo do modal aparecerá aqui...</p>
@@ -482,7 +491,7 @@ require_once 'includes/header_public.php';
                         $unit_banheiros = htmlspecialchars($unidade_slot['banheiros']);
                         $unit_vagas = htmlspecialchars($unidade_slot['vagas']);
                         $unit_value = htmlspecialchars($unidade_slot['valor']);
-                        $unit_foto_planta_full_path = BASE_URL . htmlspecialchars($unidade_slot['foto_planta']);
+                        $unit_foto_planta_full_path = BASE_URL . htmlspecialchars($foto_planta);
 
                         $informacoes_pagamento_decoded = json_decode($unidade_slot['informacoes_pagamento'] ?? '[]', true);
                         $unidade_slot['informacoes_pagamento'] = $informacoes_pagamento_decoded;
@@ -676,10 +685,10 @@ require_once 'includes/header_public.php';
 </section>
 
 <div id="modalReserva" class="modal">
+   <button type="button" class="close-button close-modal close-btn" aria-label="Fechar"><span class="material-icons">close</span></button>
    <div class="modal-content-reserva">
       <div class="modal-header">
          <h2 id="modalReservaTitle">Reservar Unidade <span id="modalUnidadeNumero"></span></h2>
-         <button type="button" class="close-button close-modal" aria-label="Fechar">×</button>
       </div>
 
       <div class="modal-body">
@@ -699,7 +708,7 @@ require_once 'includes/header_public.php';
                   <p class="total-unidade"><strong>Valor Total da Unidade:</strong> <span id="modalValorTotalUnidade"></span></p>
                </div>
                <div class="info-section info-image-column">
-                  <img id="modalFotoPlanta" src="" alt="Planta da Unidade" class="planta-preview">
+                  <img id="modalFotoPlanta" src="<?php echo BASE_URL . htmlspecialchars($foto_planta); ?>" alt="Planta da Unidades" class="planta-preview">
                </div>
             </div>
             <div class="form-actions">
@@ -805,8 +814,8 @@ require_once 'includes/header_public.php';
                </div>
 
                <div class="form-actions">
-                  <button type="button" class="btn btn-secondary" id="btnBackToStep1">Voltar</button>
                   <button type="submit" class="btn btn-primary" id="btnConfirmReserva">Confirmar Reserva</button>
+                  <button type="button" class="btn btn-secondary" id="btnBackToStep1">Voltar</button>
                </div>
             </form>
          </div>

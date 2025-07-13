@@ -61,8 +61,11 @@ body {
    overflow-x: hidden;
 }
 
-body.no-scroll {
+body.modal-open {
    overflow: hidden;
+   position: fixed;
+   width: 100%;
+   height: 100%;
 }
 
 a {
@@ -496,6 +499,7 @@ ul {
       justify-content: flex-end;
       align-items: center;
    }
+
    .empreendimento-card.desktop .card-image-content {
       flex: 1;
       display: flex;
@@ -509,6 +513,7 @@ ul {
       height: 100%;
       object-fit: cover;
    }
+
    .empreendimento-card.desktop .card-image-content img {
       width: 100%;
       height: 50%;
@@ -538,7 +543,7 @@ ul {
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
       z-index: 9;
    }
-   
+
    .empreendimento-card.desktop .caracteristicas-compactas span {
       display: flex;
       align-items: center;
@@ -549,7 +554,9 @@ ul {
       font-size: 1.5rem;
       /* font-weight: bold; */
    }
-   .empreendimento-card.desktop .metragem, .empreendimento-card.desktop .preco {
+
+   .empreendimento-card.desktop .metragem,
+   .empreendimento-card.desktop .preco {
       font-size: 1.5rem;
       /* font-weight: bold; */
    }
@@ -699,13 +706,13 @@ ul {
    top: 0;
    width: 100%;
    height: 100%;
-   overflow: auto;
+   padding: 20px;
+   /* overflow: auto; */
    /* Habilita rolagem se o conteúdo for maior que a tela */
    background-color: rgba(0, 0, 0, 0.8);
    /* Fundo escuro semi-transparente */
    justify-content: safe center;
    align-items: safe center;
-   padding: var(--spacing-md);
 }
 
 .modal.active {
@@ -745,24 +752,17 @@ ul {
    }
 }
 
-.close-button {
-   background: none;
-   border: none;
-   padding: 0.5rem;
-   color: var(--color-dark);
-   font-size: 2.5rem;
-   font-weight: bold;
+/* .close-button {
    position: absolute;
    top: var(--spacing-sm);
    right: var(--spacing-md);
-   cursor: pointer;
 }
 
 .close-button:hover,
 .close-button:focus {
    color: var(--color-primary);
    text-decoration: none;
-}
+} */
 
 /* ========================================= */
 /* Estilos Específicos para o Modal de Detalhes da Unidade */
@@ -2354,17 +2354,22 @@ p#reservaMessageLead[style*="green"] {
 
 /* Mobile First - Estilos base para mobile */
 .modal-content-reserva {
-   position: relative;
-   background-color: #fff;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: var(--color-background-primary);
    margin: 0;
-   width: calc(100% - 2rem);
-   max-height: 95vh;
+   width: 90%;
+   height: 80vh;
+   border-radius: var(--border-radius-xl);
    /* Altura máxima da viewport */
-   overflow-y: auto;
+   overflow: hidden;
    /* Permite scroll vertical se o conteúdo exceder a altura */
    display: flex;
    /* Para organizar header, body e footer */
    flex-direction: column;
+   /* justify-content: safe center; */
 }
 
 .modal-content-reserva .modal-header {
@@ -2381,26 +2386,24 @@ p#reservaMessageLead[style*="green"] {
    color: var(--color-primary);
 }
 
-.modal-content-reserva .close-button {
+/* .modal-content-reserva .close-button {
    background: none;
    border: none;
    font-size: 1.5rem;
    cursor: pointer;
    color: #666;
    padding: 0.5rem;
-}
+} */
 
 .modal-content-reserva .modal-body {
    flex-grow: 1;
    padding: 1.5rem;
    width: 100%;
+   overflow-y: auto;
 }
 
 /* Seções de Informação */
 .modal-content-reserva .info-section {
-   margin-bottom: 2rem;
-   padding-bottom: 1.5rem;
-   border-bottom: 1px solid #eee;
    width: 100%;
    overflow-x: auto;
 }
@@ -2488,9 +2491,9 @@ p#reservaMessageLead[style*="green"] {
    display: flex;
    flex-direction: column;
    gap: 1rem;
-   margin-top: 2rem;
-   padding-top: 1.5rem;
+   /* margin-top: 2rem; */
    border-top: 1px solid #eee;
+   padding: 1rem 0 0;
 }
 
 .modal-content-reserva .btn {
@@ -2627,9 +2630,10 @@ p#reservaMessageLead[style*="green"] {
    /* Ocupa toda a largura do contêiner */
    max-width: 550px;
    /* Limita a largura a 465px */
-   height: auto;
+   height: 100%;
    /* Mantém a altura proporcional */
    aspect-ratio: 530 / 570;
+   object-fit: cover;
    /* Mantém a proporção de 465:540 */
    border-radius: 32px;
    /* Bordas arredondadas */
@@ -2669,12 +2673,14 @@ p#reservaMessageLead[style*="green"] {
    transform: translateY(-50%);
    background-color: #fff;
    border: none;
-   font-size: 2.5rem;
    cursor: pointer;
    z-index: 10;
-   padding: 0.3rem 1rem;
    border-radius: 50%;
+   height: 50px;
+   width: 50px;
    display: none;
+   align-items: center;
+   justify-content: center;
    user-select: none;
    transition: background-color 0.2s ease;
 }
@@ -2691,8 +2697,20 @@ p#reservaMessageLead[style*="green"] {
    left: 10px;
 }
 
+.carousel-nav.prev span,
+.modal-nav-galeria.modal-prev span {
+   font-size: 2.5rem;
+   margin: 0;
+}
+
 .carousel-nav.next {
    right: 10px;
+}
+
+.carousel-nav.next span,
+.modal-nav-galeria.modal-next span {
+   font-size: 2.5rem;
+   margin: 0;
 }
 
 .content-desktop {
@@ -2725,9 +2743,12 @@ p#reservaMessageLead[style*="green"] {
 }
 
 .modal-content-galeria {
-   position: relative;
-   max-width: 90vw;
-   max-height: 85vh;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 90vw;
+   height: 80vh;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -2735,10 +2756,10 @@ p#reservaMessageLead[style*="green"] {
 }
 
 .modal-content-galeria img {
-   max-width: 100%;
-   max-height: calc(85vh - 40px);
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
    border-radius: 16px;
-   object-fit: contain;
    display: block;
 }
 
@@ -2773,8 +2794,12 @@ p#reservaMessageLead[style*="green"] {
    font-size: 2.5rem;
    color: #fff;
    cursor: pointer;
-   padding: 10px 15px;
    border-radius: 50%;
+   height: 50px;
+   width: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
    user-select: none;
    z-index: 20;
    transition: background-color 0.2s ease;
@@ -2891,7 +2916,7 @@ p#reservaMessageLead[style*="green"] {
    display: flex;
    align-items: center;
    justify-content: center;
-   z-index: 2000;
+   z-index: 1000;
    padding: 20px;
    opacity: 0;
    visibility: hidden;
@@ -2904,39 +2929,57 @@ p#reservaMessageLead[style*="green"] {
 }
 
 .modal-midia-content {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   z-index: 1000;
+   transform: translate(-50%, -50%);
    background-color: var(--color-background-primary);
    padding: 25px 30px;
-   border-radius: 8px;
-   max-width: 700px;
+   border-radius: var(--border-radius-xl);
+   /* max-width: 700px; */
    width: 90%;
-   max-height: 85vh;
-   overflow-y: auto;
-   position: relative;
+   height: 70vh;
+   /* overflow-y: auto; */
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-   transform: scale(0.95);
    transition: transform 0.3s ease;
+   display: flex;
+   flex-direction: column;
+   align-items: safe center;
+   justify-content: safe center;
 }
 
-.modal-midia:not(.hidden) .modal-midia-content {
-   transform: scale(1);
-}
 
-.modal-midia-close {
+.modal-midia-close, .close-button {
    position: absolute;
    top: 10px;
-   right: 15px;
-   font-size: 2rem;
-   font-weight: bold;
-   line-height: 1;
-   color: #555;
-   cursor: pointer;
-   border: none;
-   background: none;
-   padding: 5px;
+   right: 10px;
+   /* transform: translate(0, -150%); */
 }
 
-.modal-midia-close:hover {
-   color: #000;
+.close-btn {
+   height: 40px;
+   width: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 2rem;
+   font-weight: bold;
+   border-radius: 50%;
+   background: var(--color-background-primary);
+   color: var(--color-text-primary);
+   cursor: pointer;
+   transition: all 0.2s ease;
+   filter: brightness(0.9);
+   border: none;
+}
+
+.close-btn span {
+   margin-right: 0;
+}
+
+.close-btn:hover {
+   filter: brightness(1);
 }
 
 .modal-midia-title {
@@ -2951,14 +2994,17 @@ p#reservaMessageLead[style*="green"] {
    font-size: 16px;
    line-height: 1.6;
    color: #333;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   overflow-y: auto;
 }
 
 .modal-midia-body img {
    max-width: 100%;
    height: auto;
    border-radius: 4px;
-   margin-top: 15px;
-   margin-bottom: 15px;
 }
 
 .modal-midia-body iframe {
@@ -2975,12 +3021,6 @@ p#reservaMessageLead[style*="green"] {
 @media (min-width: 769px) {
    .content-desktop {
       display: block;
-   }
-
-   .modal-content-reserva {
-      margin: 2rem auto;
-      width: 90%;
-      overflow-y: visible;
    }
 
    .modal-content-reserva .modal-body {
