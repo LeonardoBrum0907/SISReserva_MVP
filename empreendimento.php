@@ -491,7 +491,7 @@ require_once 'includes/header_public.php';
                         $unit_banheiros = htmlspecialchars($unidade_slot['banheiros']);
                         $unit_vagas = htmlspecialchars($unidade_slot['vagas']);
                         $unit_value = htmlspecialchars($unidade_slot['valor']);
-                        $unit_foto_planta_full_path = BASE_URL . htmlspecialchars($foto_planta);
+                        $unit_foto_planta_full_path = $foto_planta ? BASE_URL . htmlspecialchars($foto_planta) : '';
 
                         $informacoes_pagamento_decoded = json_decode($unidade_slot['informacoes_pagamento'] ?? '[]', true);
                         $unidade_slot['informacoes_pagamento'] = $informacoes_pagamento_decoded;
@@ -522,7 +522,6 @@ require_once 'includes/header_public.php';
                         <div class="unit-card-content">
                            <?php if ($unidade_slot): ?>
                               <span class="unit-card-type"><?php echo $unit_type_name; ?></span>
-                              <!-- <span class="unit-card-status-text"><?php echo htmlspecialchars(ucfirst(str_replace('_', ' ', $unidade_slot['status']))); ?></span> -->
 
                               <div>
                                  <span class="unit-card-number">N°<?php echo $unit_number; ?> - </span>
@@ -708,7 +707,11 @@ require_once 'includes/header_public.php';
                   <p class="total-unidade"><strong>Valor Total da Unidade:</strong> <span id="modalValorTotalUnidade"></span></p>
                </div>
                <div class="info-section info-image-column">
-                  <img id="modalFotoPlanta" src="<?php echo BASE_URL . htmlspecialchars($foto_planta); ?>" alt="Planta da Unidades" class="planta-preview">
+                  <?php if ($unidade_slot['foto_planta']): ?>
+                     <img id="modalFotoPlanta" src="<?php echo BASE_URL . htmlspecialchars($foto_planta); ?>" alt="Planta da Unidades" class="planta-preview">
+                  <?php else: ?>
+                     <img id="modalFotoPlanta" src="https://via.placeholder.com/600x400" alt="Planta da Unidades" class="planta-preview">
+                  <?php endif; ?>
                </div>
             </div>
             <div class="form-actions">
